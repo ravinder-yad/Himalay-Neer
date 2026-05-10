@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button, IconButton, Badge, Rating } from '@mui/material';
 import { HiOutlineShoppingBag, HiPlus, HiMinus, HiX, HiOutlineArrowRight, HiOutlineShieldCheck, HiOutlineSparkles, HiOutlineTruck } from 'react-icons/hi';
@@ -11,6 +11,23 @@ import p5l from '../assets/p_5l.png';
 import p10l from '../assets/p_10l.png';
 import p20l from '../assets/p_20l.png';
 import pBulk from '../assets/p_bulk.png';
+import { fetchProducts } from '../services/api';
+import { CircularProgress } from '@mui/material';
+
+// Map backend images/names to local assets
+const imageMap = {
+  '250ml Mini Bottle': p250,
+  '500ml Daily Fresh': p500,
+  '1L Family Pack': p1l,
+  '2L Fridge Bottle': p2l,
+  '5L Party Jar': p5l,
+  '10L Standard Jar': p10l,
+  '20L Premium Jar': p20l,
+  '20L Premium Water Jar': p20l,
+  '5L Himalayan Spring Water': p5l,
+  'Automatic Water Dispenser': pBulk, // fallback
+  'Bulk Case (24 x 500ml)': pBulk,
+};
 
 const productsData = [
   { id: 1, name: '250ml Mini Bottle', price: 10, category: 'Bottles', desc: 'Perfect for events and single-use hydration.', rating: 4.8, img: p250, bulk: false },
@@ -27,10 +44,26 @@ const Products = () => {
   const [filter, setFilter] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cartCount, setCartCount] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const data = await fetchProducts();
+        setProducts(data.data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getProducts();
+  }, []);
 
   const filteredProducts = filter === 'All' 
-    ? productsData 
-    : productsData.filter(p => p.category === filter);
+    ? products 
+    : products.filter(p => p.category === filter);
 
   return (
     <div className="bg-white">
@@ -82,65 +115,70 @@ const Products = () => {
          </div>
       </section>
 
-      {/* 3. Product Grid */}
       <section className="py-24">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-             <AnimatePresence mode='popLayout'>
-                {filteredProducts.map((p) => (
-                  <motion.div
-                    key={p.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    whileHover={{ y: -10 }}
-                    className="bg-white rounded-[3rem] p-8 shadow-xl shadow-blue-900/5 border border-slate-50 relative group flex flex-col"
-                  >
-                    {/* Water Drop Badge */}
-                    <div className="absolute top-6 right-6 w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 shadow-inner group-hover:bg-blue-500 group-hover:text-white transition-all duration-500">
-                       <span className="text-xl font-bold">💧</span>
-                    </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <CircularProgress size={60} />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+              <AnimatePresence mode='popLayout'>
+                 {filteredProducts.map((p) => (
+                   <motion.div
+                     key={p._id}
+                     layout
+                     initial={{ opacity: 0, scale: 0.9 }}
+                     animate={{ opacity: 1, scale: 1 }}
+                     exit={{ opacity: 0, scale: 0.9 }}
+                     whileHover={{ y: -10 }}
+                     className="bg-white rounded-[3rem] p-8 shadow-xl shadow-blue-900/5 border border-slate-50 relative group flex flex-col"
+                   >
+                     {/* Water Drop Badge */}
+                     <div className="absolute top-6 right-6 w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 shadow-inner group-hover:bg-blue-500 group-hover:text-white transition-all duration-500">
+                        <span className="text-xl font-bold">💧</span>
+                     </div>
 
-                    <div className="h-64 flex items-center justify-center mb-8 relative">
-                       <motion.img 
-                         src={p.img} 
-                         alt={p.name} 
-                         className="h-full w-auto object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-500"
-                       />
-                       {/* Quick View Overlay */}
-                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button 
-                            onClick={() => setSelectedProduct(p)}
-                            className="bg-blue-900/80 backdrop-blur-md text-white px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-blue-600 transition-colors"
-                          >
-                            View Details
-                          </button>
-                       </div>
-                    </div>
+                     <div className="h-64 flex items-center justify-center mb-8 relative">
+                        <motion.img 
+                          src={imageMap[p.name] || p20l} 
+                          alt={p.name} 
+                          className="h-full w-auto object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-500"
+                        />
+                        {/* Quick View Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                           <button 
+                             onClick={() => setSelectedProduct({ ...p, img: imageMap[p.name] || p20l })}
+                             className="bg-blue-900/80 backdrop-blur-md text-white px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-blue-600 transition-colors"
+                           >
+                             View Details
+                           </button>
+                        </div>
+                     </div>
 
-                    <div className="mt-auto">
-                       <div className="flex justify-between items-center mb-2">
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">{p.category}</span>
-                          <div className="flex items-center text-yellow-400 text-xs">
-                             <Rating value={p.rating} precision={0.1} readOnly size="small" />
-                          </div>
-                       </div>
-                       <h3 className="text-xl font-black text-blue-900 mb-4">{p.name}</h3>
-                       <div className="flex items-center justify-between pt-6 border-t border-slate-50">
-                          <span className="text-2xl font-black text-blue-600">₹{p.price}</span>
-                          <button 
-                            onClick={() => setCartCount(prev => prev + 1)}
-                            className="bg-blue-50 text-blue-600 w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all shadow-sm"
-                          >
-                            <HiPlus size={20} />
-                          </button>
-                       </div>
-                    </div>
-                  </motion.div>
-                ))}
-             </AnimatePresence>
-          </div>
+                     <div className="mt-auto">
+                        <div className="flex justify-between items-center mb-2">
+                           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">{p.category}</span>
+                           <div className="flex items-center text-yellow-400 text-xs">
+                              <Rating value={4.5} precision={0.1} readOnly size="small" />
+                           </div>
+                        </div>
+                        <h3 className="text-xl font-black text-blue-900 mb-4">{p.name}</h3>
+                        <div className="flex items-center justify-between pt-6 border-t border-slate-50">
+                           <span className="text-2xl font-black text-blue-600">₹{p.price}</span>
+                           <button 
+                             onClick={() => setCartCount(prev => prev + 1)}
+                             className="bg-blue-50 text-blue-600 w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+                           >
+                             <HiPlus size={20} />
+                           </button>
+                        </div>
+                     </div>
+                   </motion.div>
+                 ))}
+              </AnimatePresence>
+            </div>
+          )}
         </div>
       </section>
 

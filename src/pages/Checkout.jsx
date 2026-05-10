@@ -11,6 +11,8 @@ import {
   HiOutlineSupport
 } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
+import { createOrder } from '../services/api';
+import { CircularProgress } from '@mui/material';
 
 // Import images for summary
 import p20l from '../assets/p_20l.png';
@@ -27,14 +29,43 @@ const Checkout = () => {
     city: '',
     pincode: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
-    setOrderSuccess(true);
+    setLoading(true);
+    setError(null);
+
+    const orderData = {
+        customerName: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        city: formData.city,
+        pincode: formData.pincode,
+        product: {
+            name: "20L Premium Jar", // This should ideally come from cart/props
+            price: 250,
+            quantity: 2
+        },
+        totalAmount: deliveryType === 'standard' ? 500 : 520,
+        deliveryType: deliveryType,
+        paymentMethod: paymentMethod
+    };
+
+    try {
+        await createOrder(orderData);
+        setOrderSuccess(true);
+    } catch (err) {
+        setError(err.error || "Failed to place order. Please try again.");
+    } finally {
+        setLoading(false);
+    }
   };
 
   if (orderSuccess) {
@@ -263,13 +294,16 @@ const Checkout = () => {
                </div>
 
                {/* 8. Place Order Button */}
+               {error && <p className="text-red-500 text-sm font-bold mb-4 text-center">{error}</p>}
+               
                <Button 
                 type="submit"
                 variant="contained" 
                 fullWidth
+                disabled={loading}
                 className="!rounded-full !bg-gradient-to-br !from-blue-900 !to-blue-600 !py-8 !font-black !text-2xl !normal-case !shadow-[0_20px_60px_rgba(30,58,138,0.3)] !mb-10"
                >
-                Place Order
+                {loading ? <CircularProgress size={24} color="inherit" /> : 'Place Order'}
                </Button>
 
                {/* 10. Trust Badges */}
