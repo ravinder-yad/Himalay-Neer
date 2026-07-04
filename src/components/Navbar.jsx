@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiMenuAlt3, HiX, HiOutlineShoppingBag, HiPhone, HiTruck } from 'react-icons/hi';
+import { HiMenuAlt3, HiX, HiOutlineShoppingBag, HiPhone, HiTruck, HiOutlineLogin, HiOutlineUserAdd } from 'react-icons/hi';
 import { Button, Badge, IconButton } from '@mui/material';
 import Logo from './Logo';
 
 const TopBar = () => {
   return (
-    <div className="bg-blue-50 py-2 border-b border-blue-100 hidden md:block">
-      <div className="container mx-auto px-6 flex justify-between items-center text-[12px] font-black tracking-widest uppercase text-blue-900/80">
-        <div className="flex items-center space-x-6">
-          <div className="flex items-center space-x-2">
-            <HiPhone className="text-blue-500" />
-            <span>+91 98765 43210</span>
-          </div>
-          <div className="flex items-center space-x-2 border-l border-blue-200 pl-6">
-            <HiTruck className="text-blue-500" size={14} />
-            <span>Free Delivery across India</span>
+    <div className="bg-blue-950 py-2.5 border-b border-blue-900/50 hidden md:block relative z-[110]">
+      <div className="container mx-auto px-6 flex justify-between items-center text-[11px] font-bold tracking-[0.15em] uppercase text-blue-100/90">
+        <div className="flex items-center space-x-8">
+          <motion.div whileHover={{ scale: 1.05 }} className="flex items-center space-x-2.5 cursor-pointer">
+            <div className="bg-blue-500/20 p-1.5 rounded-full">
+               <HiPhone className="text-cyan-400" size={14} />
+            </div>
+            <span className="hover:text-white transition-colors">8000490844</span>
+          </motion.div>
+          <div className="flex items-center space-x-2.5 border-l border-blue-800/50 pl-8">
+            <div className="bg-blue-500/20 p-1.5 rounded-full">
+               <HiTruck className="text-cyan-400" size={14} />
+            </div>
+            <span>Free Delivery Across India</span>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-          <span>100% Pure Himalayan Water</span>
+        <div className="flex items-center space-x-3 bg-blue-900/50 px-4 py-1.5 rounded-full border border-blue-800/50 shadow-inner">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+          </span>
+          <span className="text-white font-black tracking-[0.2em]">100% Pure Himalayan Water</span>
         </div>
       </div>
     </div>
@@ -35,7 +42,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -59,63 +66,79 @@ const Navbar = () => {
 
       {/* 2. Main Navbar - Sticky at the top */}
       <header className={`sticky top-0 z-[100] transition-all duration-500 ${
-          isSolid ? 'bg-white shadow-2xl border-b border-blue-50' : 'bg-transparent'
+          isSolid ? 'bg-white/80 backdrop-blur-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] border-b border-slate-200/50' : 'bg-transparent'
         }`}>
         <motion.nav
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="w-full h-[80px] md:h-[100px] flex items-center"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="w-full h-[80px] md:h-[90px] flex items-center"
         >
           <div className="container mx-auto px-6 flex justify-between items-center">
             
             {/* Logo Section */}
             <Link to="/" className="flex items-center">
               <motion.div 
-                whileHover={{ scale: 1.1 }} 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className="relative flex items-center justify-center"
               >
                 <Logo 
                   variant={isSolid ? "dark" : "light"} 
-                  className={`transition-all duration-500 ${isScrolled ? 'h-10 md:h-12' : 'h-14 md:h-16'}`} 
+                  className={`transition-all duration-500 ${isScrolled ? 'h-10 md:h-12' : 'h-12 md:h-14'}`} 
                 />
               </motion.div>
             </Link>
 
             {/* Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-10">
-              {navLinks.map((link) => (
-                <Link key={link.name} to={link.path} className="relative group py-2">
-                  <span className={`text-[16px] font-black tracking-wide transition-colors duration-300 ${
-                    location.pathname === link.path 
-                      ? 'text-blue-600' 
-                      : 'text-blue-900 group-hover:text-blue-500'
-                  }`}>
-                    {link.name}
-                  </span>
-                  <motion.span 
-                    className="absolute -bottom-1 left-0 h-0.5 bg-blue-500 rounded-full"
-                    animate={{ width: location.pathname === link.path ? '100%' : '0%' }}
-                  />
-                </Link>
-              ))}
+            <div className="hidden lg:flex items-center space-x-2 bg-slate-50/50 p-1.5 rounded-full border border-slate-200/50 backdrop-blur-md">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link key={link.name} to={link.path} className="relative px-6 py-2 rounded-full group">
+                    <span className={`relative z-10 text-[13px] font-black tracking-widest uppercase transition-colors duration-300 ${
+                      isActive ? 'text-blue-700' : 'text-slate-500 group-hover:text-blue-600'
+                    }`}>
+                      {link.name}
+                    </span>
+                    {isActive && (
+                      <motion.div 
+                        layoutId="navIndicator"
+                        className="absolute inset-0 bg-white rounded-full shadow-sm border border-slate-200/50"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Action Buttons */}
-            <div className="hidden md:flex items-center space-x-8">
-              <Link to="/cart" className="flex items-center group cursor-pointer no-underline">
-                <IconButton className="!bg-transparent">
-                  <Badge badgeContent={2} color="primary" sx={{ '& .MuiBadge-badge': { backgroundColor: '#3b82f6', color: 'white', fontWeight: 'bold' } }}>
-                    <HiOutlineShoppingBag className="text-3xl text-blue-900" />
-                  </Badge>
-                </IconButton>
-                <span className="hidden lg:inline text-[13px] font-black uppercase tracking-widest ml-2 text-blue-900/60 group-hover:text-blue-600 transition-colors">Cart</span>
+            <div className="hidden md:flex items-center space-x-4 lg:space-x-5">
+              <Link to="/login" className="hidden lg:flex items-center space-x-1.5 text-slate-500 hover:text-blue-600 font-black text-[12px] uppercase tracking-widest transition-colors group">
+                <HiOutlineLogin className="text-xl group-hover:scale-110 transition-transform" />
+                <span>Login</span>
+              </Link>
+              <Link to="/signup" className="hidden lg:flex items-center space-x-1.5 text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-5 py-2.5 rounded-full font-black text-[12px] uppercase tracking-widest transition-all group border border-blue-100">
+                <HiOutlineUserAdd className="text-xl group-hover:scale-110 transition-transform" />
+                <span>Sign Up</span>
+              </Link>
+              
+              <div className="hidden lg:block w-px h-8 bg-slate-200 mx-1"></div>
+
+              <Link to="/cart">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="relative flex items-center justify-center w-12 h-12 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-colors shadow-sm">
+                   <Badge badgeContent={2} sx={{ '& .MuiBadge-badge': { backgroundColor: '#2563eb', color: 'white', fontWeight: 'bold', fontSize: '0.75rem', height: '22px', minWidth: '22px', borderRadius: '11px', border: '2px solid white' } }}>
+                     <HiOutlineShoppingBag className="text-2xl text-slate-700" />
+                   </Badge>
+                </motion.div>
               </Link>
               
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link to="/checkout">
                   <Button 
                     variant="contained" 
-                    className="!rounded-full !bg-gradient-to-r !from-blue-900 !to-blue-600 !px-10 !py-3 !text-white !font-black !text-[15px] !normal-case !shadow-2xl"
+                    className="!rounded-full !bg-gradient-to-r !from-blue-600 !to-cyan-500 hover:!from-blue-700 hover:!to-cyan-600 !px-8 !py-3 !text-white !font-black !text-[14px] !tracking-widest !uppercase !shadow-[0_10px_25px_-5px_rgba(37,99,235,0.4)]"
                   >
                     Buy Now
                   </Button>
@@ -126,12 +149,12 @@ const Navbar = () => {
             {/* Mobile Menu Toggle */}
             <div className="lg:hidden flex items-center space-x-4">
                <Link to="/cart">
-                <Badge badgeContent={2} color="primary">
-                    <HiOutlineShoppingBag className="text-blue-900 text-2xl" />
+                <Badge badgeContent={2} sx={{ '& .MuiBadge-badge': { backgroundColor: '#2563eb', color: 'white' } }}>
+                    <HiOutlineShoppingBag className="text-slate-700 text-2xl" />
                   </Badge>
                </Link>
-              <button onClick={() => setIsMobileMenuOpen(true)} className="p-2 rounded-xl text-blue-900 bg-blue-50">
-                <HiMenuAlt3 size={28} />
+              <button onClick={() => setIsMobileMenuOpen(true)} className="p-2.5 rounded-full text-slate-700 bg-slate-50 border border-slate-200 shadow-sm active:scale-95 transition-transform">
+                <HiMenuAlt3 size={24} />
               </button>
             </div>
           </div>
@@ -141,22 +164,36 @@ const Navbar = () => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMobileMenuOpen(false)} className="fixed inset-0 bg-blue-900/40 backdrop-blur-sm z-[110]" />
-              <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="fixed right-0 top-0 h-full w-[85%] bg-white z-[111] shadow-2xl p-10 flex flex-col">
-                <div className="flex justify-between items-center mb-16">
-                  <Logo variant="dark" className="h-12" />
-                  <button onClick={() => setIsMobileMenuOpen(false)} className="w-12 h-12 flex items-center justify-center bg-slate-100 rounded-full"><HiX size={28} /></button>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMobileMenuOpen(false)} className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[110]" />
+              <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: "spring", damping: 25, stiffness: 200 }} className="fixed right-0 top-0 h-full w-[85%] sm:w-[400px] bg-white z-[111] shadow-2xl p-8 flex flex-col rounded-l-[2rem]">
+                <div className="flex justify-between items-center mb-12">
+                  <Logo variant="dark" className="h-10" />
+                  <button onClick={() => setIsMobileMenuOpen(false)} className="w-12 h-12 flex items-center justify-center bg-slate-50 hover:bg-slate-100 rounded-full border border-slate-200 transition-colors"><HiX size={24} className="text-slate-700" /></button>
                 </div>
-                <div className="flex flex-col space-y-8">
-                  {navLinks.map((link) => (
-                    <Link key={link.name} to={link.path} onClick={() => setIsMobileMenuOpen(false)} className={`text-3xl font-black ${location.pathname === link.path ? 'text-blue-600' : 'text-slate-300'}`}>
-                      {link.name}
-                    </Link>
-                  ))}
+                <div className="flex flex-col space-y-2">
+                  {navLinks.map((link) => {
+                    const isActive = location.pathname === link.path;
+                    return (
+                      <Link key={link.name} to={link.path} onClick={() => setIsMobileMenuOpen(false)} className={`text-2xl font-black py-4 px-6 rounded-2xl transition-colors ${isActive ? 'bg-blue-50 text-blue-600' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-800'}`}>
+                        {link.name}
+                      </Link>
+                    )
+                  })}
+                  
+                  <div className="h-px bg-slate-100 my-4 w-full"></div>
+                  
+                  <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors text-slate-400 hover:bg-slate-50 hover:text-slate-800">
+                    <HiOutlineLogin />
+                    <span>Login</span>
+                  </Link>
+                  <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100">
+                    <HiOutlineUserAdd />
+                    <span>Sign Up</span>
+                  </Link>
                 </div>
-                <div className="mt-auto">
-                  <Link to="/checkout">
-                    <Button variant="contained" fullWidth className="!rounded-2xl !bg-gradient-to-r !from-blue-900 !to-blue-600 !py-5 !text-white !font-black !text-xl !normal-case">Buy Now</Button>
+                <div className="mt-auto pt-8 border-t border-slate-100">
+                  <Link to="/checkout" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="contained" fullWidth className="!rounded-2xl !bg-gradient-to-r !from-blue-600 !to-cyan-500 !py-4 !text-white !font-black !text-lg !normal-case shadow-xl shadow-blue-500/20">Buy Now</Button>
                   </Link>
                 </div>
               </motion.div>
