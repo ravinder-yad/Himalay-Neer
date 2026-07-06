@@ -1,9 +1,6 @@
-const Contact = require('../models/Contact');
+import Contact from '../models/Contact.js';
 
-// @desc    Submit a contact form
-// @route   POST /api/contacts
-// @access  Public
-exports.submitContact = async (req, res) => {
+export const submitContact = async (req, res) => {
     try {
         const contact = await Contact.create(req.body);
         res.status(201).json({
@@ -18,10 +15,7 @@ exports.submitContact = async (req, res) => {
     }
 };
 
-// @desc    Get all contact submissions
-// @route   GET /api/contacts
-// @access  Private/Admin
-exports.getContacts = async (req, res) => {
+export const getContacts = async (req, res) => {
     try {
         const contacts = await Contact.find().sort({ createdAt: -1 });
         res.status(200).json({
@@ -37,10 +31,7 @@ exports.getContacts = async (req, res) => {
     }
 };
 
-// @desc    Update contact status
-// @route   PUT /api/contacts/:id
-// @access  Private/Admin
-exports.updateContactStatus = async (req, res) => {
+export const updateContactStatus = async (req, res) => {
     try {
         const contact = await Contact.findByIdAndUpdate(req.params.id, { status: req.body.status }, {
             new: true,
@@ -66,10 +57,7 @@ exports.updateContactStatus = async (req, res) => {
     }
 };
 
-// @desc    Delete contact submission
-// @route   DELETE /api/contacts/:id
-// @access  Private/Admin
-exports.deleteContact = async (req, res) => {
+export const deleteContact = async (req, res) => {
     try {
         const contact = await Contact.findById(req.params.id);
         if (!contact) {

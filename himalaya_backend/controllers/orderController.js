@@ -1,9 +1,6 @@
-const Order = require('../models/Order');
+import Order from '../models/Order.js';
 
-// @desc    Create new order
-// @route   POST /api/orders
-// @access  Public
-exports.createOrder = async (req, res) => {
+export const createOrder = async (req, res) => {
     try {
         const order = await Order.create(req.body);
         res.status(201).json({
@@ -18,10 +15,7 @@ exports.createOrder = async (req, res) => {
     }
 };
 
-// @desc    Get all orders
-// @route   GET /api/orders
-// @access  Private/Admin
-exports.getOrders = async (req, res) => {
+export const getOrders = async (req, res) => {
     try {
         const orders = await Order.find().sort({ createdAt: -1 });
         res.status(200).json({
@@ -37,10 +31,7 @@ exports.getOrders = async (req, res) => {
     }
 };
 
-// @desc    Get single order
-// @route   GET /api/orders/:id
-// @access  Public
-exports.getOrderById = async (req, res) => {
+export const getOrderById = async (req, res) => {
     try {
         const order = await Order.findById(req.params.id);
         if (!order) {
@@ -61,10 +52,7 @@ exports.getOrderById = async (req, res) => {
     }
 };
 
-// @desc    Update order status
-// @route   PUT /api/orders/:id
-// @access  Private/Admin
-exports.updateOrderStatus = async (req, res) => {
+export const updateOrderStatus = async (req, res) => {
     try {
         const order = await Order.findById(req.params.id);
         if (!order) {
@@ -88,10 +76,7 @@ exports.updateOrderStatus = async (req, res) => {
     }
 };
 
-// @desc    Delete order
-// @route   DELETE /api/orders/:id
-// @access  Private/Admin
-exports.deleteOrder = async (req, res) => {
+export const deleteOrder = async (req, res) => {
     try {
         const order = await Order.findById(req.params.id);
         if (!order) {
@@ -113,10 +98,7 @@ exports.deleteOrder = async (req, res) => {
     }
 };
 
-// @desc    Get unique customers from orders
-// @route   GET /api/orders/customers
-// @access  Private/Admin
-exports.getCustomers = async (req, res) => {
+export const getCustomers = async (req, res) => {
     try {
         const customers = await Order.aggregate([
             {
@@ -149,10 +131,7 @@ exports.getCustomers = async (req, res) => {
     }
 };
 
-// @desc    Get orders by customer phone
-// @route   GET /api/orders/customer/:phone
-// @access  Private/Admin
-exports.getOrdersByPhone = async (req, res) => {
+export const getOrdersByPhone = async (req, res) => {
     try {
         const orders = await Order.find({ phone: req.params.phone }).sort({ createdAt: -1 });
         res.status(200).json({
@@ -164,6 +143,22 @@ exports.getOrdersByPhone = async (req, res) => {
         res.status(400).json({
             success: false,
             error: error.message
+        });
+    }
+};
+
+export const getMyOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({ email: req.user.email }).sort({ createdAt: -1 });
+        res.status(200).json({
+            success: true,
+            count: orders.length,
+            data: orders
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: 'Server Error'
         });
     }
 };

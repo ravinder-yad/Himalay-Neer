@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiMenuAlt3, HiX, HiOutlineShoppingBag, HiPhone, HiTruck, HiOutlineLogin, HiOutlineUserAdd } from 'react-icons/hi';
-import { Button, Badge, IconButton } from '@mui/material';
+import { HiMenuAlt3, HiX, HiOutlineShoppingBag, HiPhone, HiTruck, HiOutlineLogin, HiOutlineUserAdd, HiOutlineUser } from 'react-icons/hi';
+import { Button, Badge } from '@mui/material';
 import Logo from './Logo';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout, reset } from '../store/authSlice';
 
 const TopBar = () => {
   return (
@@ -39,6 +41,16 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Oops I need useNavigate
+
+  const { user } = useSelector((state) => state.auth);
+
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate('/');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -115,17 +127,6 @@ const Navbar = () => {
 
             {/* Action Buttons */}
             <div className="hidden md:flex items-center space-x-4 lg:space-x-5">
-              <Link to="/login" className="hidden lg:flex items-center space-x-1.5 text-slate-500 hover:text-blue-600 font-black text-[12px] uppercase tracking-widest transition-colors group">
-                <HiOutlineLogin className="text-xl group-hover:scale-110 transition-transform" />
-                <span>Login</span>
-              </Link>
-              <Link to="/signup" className="hidden lg:flex items-center space-x-1.5 text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-5 py-2.5 rounded-full font-black text-[12px] uppercase tracking-widest transition-all group border border-blue-100">
-                <HiOutlineUserAdd className="text-xl group-hover:scale-110 transition-transform" />
-                <span>Sign Up</span>
-              </Link>
-              
-              <div className="hidden lg:block w-px h-8 bg-slate-200 mx-1"></div>
-
               <Link to="/cart">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="relative flex items-center justify-center w-12 h-12 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-colors shadow-sm">
                    <Badge badgeContent={2} sx={{ '& .MuiBadge-badge': { backgroundColor: '#2563eb', color: 'white', fontWeight: 'bold', fontSize: '0.75rem', height: '22px', minWidth: '22px', borderRadius: '11px', border: '2px solid white' } }}>
@@ -144,6 +145,37 @@ const Navbar = () => {
                   </Button>
                 </Link>
               </motion.div>
+
+              <div className="hidden lg:block w-px h-8 bg-slate-200 mx-1"></div>
+
+              {user ? (
+                <div className="hidden lg:flex items-center space-x-2 bg-white px-2 py-1.5 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-slate-100 ml-4">
+                  <Link to="/dashboard" className="flex items-center space-x-2 text-slate-700 hover:text-blue-600 transition-colors font-semibold pr-3 border-r border-slate-100">
+                    {user.profileImage ? (
+                      <img src={`http://localhost:5000${user.profileImage}`} alt="Profile" className="w-9 h-9 rounded-full object-cover border border-slate-200" />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold border border-blue-100">
+                        {user.name?.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <span className="hidden xl:inline-block text-sm pr-1">{user.name.split(' ')[0]}'s Dashboard</span>
+                  </Link>
+                  <button onClick={onLogout} className="px-3 py-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 font-black text-[10px] uppercase tracking-widest rounded-full transition-all flex items-center">
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <Link to="/login" className="hidden lg:flex items-center space-x-1.5 text-slate-500 hover:text-blue-600 font-black text-[12px] uppercase tracking-widest transition-colors group">
+                    <HiOutlineLogin className="text-xl group-hover:scale-110 transition-transform" />
+                    <span>Login</span>
+                  </Link>
+                  <Link to="/signup" className="hidden lg:flex items-center space-x-1.5 text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-5 py-2.5 rounded-full font-black text-[12px] uppercase tracking-widest transition-all group border border-blue-100">
+                    <HiOutlineUserAdd className="text-xl group-hover:scale-110 transition-transform" />
+                    <span>Sign Up</span>
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -182,14 +214,29 @@ const Navbar = () => {
                   
                   <div className="h-px bg-slate-100 my-4 w-full"></div>
                   
-                  <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors text-slate-400 hover:bg-slate-50 hover:text-slate-800">
-                    <HiOutlineLogin />
-                    <span>Login</span>
-                  </Link>
-                  <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100">
-                    <HiOutlineUserAdd />
-                    <span>Sign Up</span>
-                  </Link>
+                  {user ? (
+                    <>
+                      <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100">
+                        <HiOutlineUser />
+                        <span>{user.name.split(' ')[0]}'s Dashboard</span>
+                      </Link>
+                      <button onClick={() => { setIsMobileMenuOpen(false); onLogout(); }} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors text-slate-400 hover:bg-slate-50 hover:text-red-500 text-left w-full">
+                        <HiOutlineLogin />
+                        <span>Logout</span>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors text-slate-400 hover:bg-slate-50 hover:text-slate-800">
+                        <HiOutlineLogin />
+                        <span>Login</span>
+                      </Link>
+                      <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100">
+                        <HiOutlineUserAdd />
+                        <span>Sign Up</span>
+                      </Link>
+                    </>
+                  )}
                 </div>
                 <div className="mt-auto pt-8 border-t border-slate-100">
                   <Link to="/checkout" onClick={() => setIsMobileMenuOpen(false)}>

@@ -1,34 +1,25 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const connectDB = require('./config/db');
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import connectDB from './config/db.js';
+import productRoutes from './routes/productRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
-// Load env vars
 dotenv.config();
-
-// Connect to database
 connectDB();
 
 const app = express();
 
-// Body parser
 app.use(express.json());
-
-// Enable CORS
 app.use(cors());
-
-// Static folder for uploads
 app.use('/uploads', express.static('uploads'));
 
-// Route files
-const productRoutes = require('./routes/productRoutes');
-const orderRoutes = require('./routes/orderRoutes');
-const contactRoutes = require('./routes/contactRoutes');
-
-// Mount routers
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/contacts', contactRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
     res.send('Himalaya Neer API is running...');

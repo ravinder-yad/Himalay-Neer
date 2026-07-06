@@ -1,11 +1,12 @@
-const Product = require('../models/Product');
-const fs = require('fs');
-const path = require('path');
+import Product from '../models/Product.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// @desc    Get all products
-// @route   GET /api/products
-// @access  Public
-exports.getProducts = async (req, res) => {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export const getProducts = async (req, res) => {
     try {
         const products = await Product.find();
         res.status(200).json({
@@ -21,10 +22,7 @@ exports.getProducts = async (req, res) => {
     }
 };
 
-// @desc    Create a product
-// @route   POST /api/products
-// @access  Private/Admin
-exports.createProduct = async (req, res) => {
+export const createProduct = async (req, res) => {
     try {
         const productData = { ...req.body };
         
@@ -45,9 +43,7 @@ exports.createProduct = async (req, res) => {
     }
 };
 
-// @desc    Get single product
-// @route   GET /api/products/:id
-exports.getProductById = async (req, res) => {
+export const getProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) {
@@ -68,9 +64,7 @@ exports.getProductById = async (req, res) => {
     }
 };
 
-// @desc    Delete a product
-// @route   DELETE /api/products/:id
-exports.deleteProduct = async (req, res) => {
+export const deleteProduct = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         

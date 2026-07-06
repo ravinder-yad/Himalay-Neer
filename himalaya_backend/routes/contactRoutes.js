@@ -1,18 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const { 
+import express from 'express';
+import { 
     submitContact, 
     getContacts, 
     updateContactStatus, 
     deleteContact 
-} = require('../controllers/contactController');
+} from '../controllers/contactController.js';
+import { protect, authorize } from '../middleware/authMiddleware.js';
+
+const router = express.Router();
 
 router.route('/')
     .post(submitContact)
-    .get(getContacts);
+    .get(protect, authorize('admin'), getContacts);
 
 router.route('/:id')
-    .put(updateContactStatus)
-    .delete(deleteContact);
+    .put(protect, authorize('admin'), updateContactStatus)
+    .delete(protect, authorize('admin'), deleteContact);
 
-module.exports = router;
+export default router;

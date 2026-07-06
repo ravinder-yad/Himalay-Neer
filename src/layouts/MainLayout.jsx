@@ -1,13 +1,20 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
 const MainLayout = () => {
+  const location = useLocation();
+  const hideFooterRoutes = ['/login', '/signup', '/forgot-password', '/dashboard'];
+  const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
+  
+  const hideNavbarRoutes = ['/dashboard'];
+  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      {!shouldHideNavbar && <Navbar />}
       <main className="flex-grow">
         <motion.div
           initial={{ opacity: 0 }}
@@ -17,7 +24,7 @@ const MainLayout = () => {
           <Outlet />
         </motion.div>
       </main>
-      <Footer />
+      {!shouldHideFooter && <Footer />}
     </div>
   );
 };

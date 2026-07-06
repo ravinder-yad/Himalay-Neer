@@ -74,7 +74,7 @@ const Hero = () => {
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               src={heroImageUrl}
               alt="Himalayan Water Bottle"
-              className="w-full h-full object-contain z-10"
+              className="w-full h-full object-contain z-10 mix-blend-multiply"
             />
           </div>
 

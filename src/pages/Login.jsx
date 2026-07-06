@@ -2,10 +2,30 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiDroplet } from 'react-icons/fi';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser, reset } from '../store/authSlice';
+import { useEffect } from 'react';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      alert(message); // Could use a better toast here later
+    }
+
+    if (isSuccess || user) {
+      navigate('/');
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,8 +33,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login submitted:', formData);
-    // Add authentication logic here
+    dispatch(loginUser(formData));
   };
 
   return (
@@ -107,9 +126,9 @@ const Login = () => {
                </div>
                
                <div className="flex gap-5 pt-8">
-                 <button type="submit" className="flex-1 bg-[#2563eb] text-white rounded-full py-3.5 text-[14px] font-bold shadow-[0_8px_20px_rgba(37,99,235,0.24)] hover:bg-blue-700 hover:-translate-y-0.5 transition-all active:scale-95">
-                   Sign In
-                 </button>
+                  <button type="submit" disabled={isLoading} className="flex-1 bg-[#2563eb] text-white rounded-full py-3.5 text-[14px] font-bold shadow-[0_8px_20px_rgba(37,99,235,0.24)] hover:bg-blue-700 hover:-translate-y-0.5 transition-all active:scale-95 disabled:opacity-50">
+                    {isLoading ? 'Signing In...' : 'Sign In'}
+                  </button>
                  <button type="button" onClick={() => navigate('/signup')} className="flex-1 bg-white text-gray-500 border-2 border-gray-200 rounded-full py-3.5 text-[14px] font-bold hover:border-gray-300 hover:text-gray-700 hover:-translate-y-0.5 transition-all active:scale-95">
                    Sign Up
                  </button>
