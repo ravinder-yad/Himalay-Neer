@@ -29,13 +29,13 @@ const Hero = () => {
             <span>100% Himalayan Source</span>
           </motion.div>
 
-          <h1 className="text-6xl lg:text-8xl font-black text-blue-900 leading-[1.1] mb-8 tracking-tighter">
+          <h1 className="text-5xl lg:text-7xl font-black text-blue-900 leading-[1.1] mb-8 tracking-tighter">
             Pure From <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 italic font-serif">Himalayas</span>
           </h1>
 
           <div className="mb-12">
-            <p className="text-xl text-slate-500 leading-relaxed max-w-lg font-medium mb-4">
+            <p className="text-lg text-slate-500 leading-relaxed max-w-lg font-medium mb-4">
               Experience the crystal-clear freshness of the Himalayas in every drop.
             </p>
             <div className="flex items-center gap-4 text-blue-600 font-black uppercase tracking-[0.3em] text-xs">
@@ -49,12 +49,12 @@ const Hero = () => {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="contained"
-                className="!rounded-full !bg-gradient-to-r !from-blue-900 !to-blue-600 !px-12 !py-5 !text-white !font-black !text-lg !normal-case !shadow-2xl !shadow-blue-900/30"
+                className="!rounded-full !bg-gradient-to-r !from-blue-900 !to-blue-600 !px-8 !py-4 !text-white !font-black !text-base !normal-case !shadow-2xl !shadow-blue-900/30"
               >
                 Order Now <HiArrowRight className="ml-2" />
               </Button>
             </motion.div>
-            <button className="px-10 py-5 rounded-full font-black text-blue-900 border-2 border-blue-900/5 hover:bg-blue-50 transition-all flex items-center gap-2">
+            <button className="px-8 py-4 rounded-full font-black text-blue-900 border-2 border-blue-900/5 hover:bg-blue-50 transition-all flex items-center gap-2">
               Learn More
             </button>
           </div>
@@ -85,12 +85,12 @@ const Hero = () => {
             className="absolute top-1/4 -right-12 bg-white/80 backdrop-blur-md p-6 rounded-3xl shadow-2xl shadow-blue-900/10 border border-blue-50 z-20"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
-                <HiShieldCheck size={28} />
+              <div className="w-10 h-10 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
+                <HiShieldCheck size={24} />
               </div>
               <div>
-                <div className="text-lg font-black text-blue-900">Certified</div>
-                <div className="text-xs text-slate-400 uppercase font-black tracking-widest">ISO 9001:2015</div>
+                <div className="text-base font-black text-blue-900">Certified</div>
+                <div className="text-[10px] text-slate-400 uppercase font-black tracking-widest">ISO 9001:2015</div>
               </div>
             </div>
           </motion.div>
@@ -101,12 +101,12 @@ const Hero = () => {
             className="absolute bottom-1/4 -left-12 bg-white/80 backdrop-blur-md p-6 rounded-3xl shadow-2xl shadow-blue-900/10 border border-blue-50 z-20"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-400">
-                <HiOutlineSparkles size={28} />
+              <div className="w-10 h-10 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-400">
+                <HiOutlineSparkles size={24} />
               </div>
               <div>
-                <div className="text-lg font-black text-blue-900">pH 7.8</div>
-                <div className="text-xs text-slate-400 uppercase font-black tracking-widest">NATURAL BALANCE</div>
+                <div className="text-base font-black text-blue-900">pH 7.8</div>
+                <div className="text-[10px] text-slate-400 uppercase font-black tracking-widest">NATURAL BALANCE</div>
               </div>
             </div>
           </motion.div>

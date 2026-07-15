@@ -10,7 +10,7 @@ import { logout, reset } from '../store/authSlice';
 const TopBar = () => {
   return (
     <div className="bg-blue-950 py-2.5 border-b border-blue-900/50 hidden md:block relative z-[110]">
-      <div className="container mx-auto px-6 flex justify-between items-center text-[11px] font-bold tracking-[0.15em] uppercase text-blue-100/90">
+      <div className="container mx-auto px-6 flex justify-between items-center text-[10px] font-bold tracking-[0.15em] uppercase text-blue-100/90">
         <div className="flex items-center space-x-8">
           <motion.div whileHover={{ scale: 1.05 }} className="flex items-center space-x-2.5 cursor-pointer">
             <div className="bg-blue-500/20 p-1.5 rounded-full">
@@ -97,18 +97,18 @@ const Navbar = () => {
               >
                 <Logo 
                   variant="dark" 
-                  className={`transition-all duration-500 ${isScrolled ? 'h-10 md:h-12' : 'h-12 md:h-14'}`} 
+                  className={`transition-all duration-500 ${isScrolled ? 'h-8 md:h-9' : 'h-10 md:h-11'}`} 
                 />
               </motion.div>
             </Link>
 
             {/* Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-2 bg-slate-50/50 p-1.5 rounded-full border border-slate-200/50 backdrop-blur-md">
+            <div className="hidden lg:flex items-center space-x-1.5 bg-slate-50/50 p-1.5 rounded-full border border-slate-200/50 backdrop-blur-md">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path;
                 return (
-                  <Link key={link.name} to={link.path} className="relative px-6 py-2 rounded-full group">
-                    <span className={`relative z-10 text-[13px] font-black tracking-widest uppercase transition-colors duration-300 ${
+                  <Link key={link.name} to={link.path} className="relative px-5 py-2 rounded-full group">
+                    <span className={`relative z-10 text-[12px] font-black tracking-widest uppercase transition-colors duration-300 ${
                       isActive ? 'text-blue-700' : 'text-slate-500 group-hover:text-blue-600'
                     }`}>
                       {link.name}
@@ -139,7 +139,7 @@ const Navbar = () => {
                 <Link to="/checkout">
                   <Button 
                     variant="contained" 
-                    className="!rounded-full !bg-gradient-to-r !from-blue-600 !to-cyan-500 hover:!from-blue-700 hover:!to-cyan-600 !px-8 !py-3 !text-white !font-black !text-[14px] !tracking-widest !uppercase !shadow-[0_10px_25px_-5px_rgba(37,99,235,0.4)]"
+                    className="!rounded-full !bg-gradient-to-r !from-blue-600 !to-cyan-500 hover:!from-blue-700 hover:!to-cyan-600 !px-6 !py-2.5 !text-white !font-black !text-[13px] !tracking-widest !uppercase !shadow-[0_10px_25px_-5px_rgba(37,99,235,0.4)]"
                   >
                     Buy Now
                   </Button>
@@ -166,12 +166,12 @@ const Navbar = () => {
                 </div>
               ) : (
                 <>
-                  <Link to="/login" className="hidden lg:flex items-center space-x-1.5 text-slate-500 hover:text-blue-600 font-black text-[12px] uppercase tracking-widest transition-colors group">
-                    <HiOutlineLogin className="text-xl group-hover:scale-110 transition-transform" />
+                  <Link to="/login" className="hidden lg:flex items-center space-x-1 text-slate-500 hover:text-blue-600 font-black text-[11px] uppercase tracking-widest transition-colors group">
+                    <HiOutlineLogin className="text-lg group-hover:scale-110 transition-transform" />
                     <span>Login</span>
                   </Link>
-                  <Link to="/signup" className="hidden lg:flex items-center space-x-1.5 text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-5 py-2.5 rounded-full font-black text-[12px] uppercase tracking-widest transition-all group border border-blue-100">
-                    <HiOutlineUserAdd className="text-xl group-hover:scale-110 transition-transform" />
+                  <Link to="/signup" className="hidden lg:flex items-center space-x-1 text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-4 py-2.5 rounded-full font-black text-[11px] uppercase tracking-widest transition-all group border border-blue-100">
+                    <HiOutlineUserAdd className="text-lg group-hover:scale-110 transition-transform" />
                     <span>Sign Up</span>
                   </Link>
                 </>

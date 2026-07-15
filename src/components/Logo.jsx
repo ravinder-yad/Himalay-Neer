@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Logo = ({ className = "h-12 md:h-14", variant = "dark" }) => {
+const Logo = ({ className = "h-9 md:h-11", variant = "dark" }) => {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    <div className={`flex items-center gap-2.5 ${className}`}>
       {/* Icon: Vector Re-creation of Uploaded Image */}
       <svg 
         className="h-full w-auto flex-shrink-0"
@@ -38,13 +38,13 @@ const Logo = ({ className = "h-12 md:h-14", variant = "dark" }) => {
       </svg>
       
       {/* Text Container */}
-      <div className="flex flex-col justify-center h-full pt-1.5">
-        <div className={`font-black text-[24px] md:text-[29px] leading-[0.85] tracking-tight uppercase flex items-center ${variant === 'dark' ? '' : 'drop-shadow-md'}`}>
+      <div className="flex flex-col justify-center h-full pt-1">
+        <div className={`font-black text-[20px] md:text-[23px] leading-[0.85] tracking-tight uppercase flex items-center ${variant === 'dark' ? '' : 'drop-shadow-md'}`}>
           <span style={{ color: variant === 'dark' ? '#1E40AF' : '#FFFFFF' }}>HIMALAY</span>
           <span style={{ color: '#3B82F6' }}>NEER</span>
         </div>
         <div 
-          className={`text-[7.5px] md:text-[9px] font-black uppercase leading-tight mt-1 w-full ${variant === 'dark' ? 'text-[#1E40AF]' : 'text-blue-100 drop-shadow-sm'}`}
+          className={`text-[6px] md:text-[7px] font-black uppercase leading-tight mt-0.5 w-full ${variant === 'dark' ? 'text-[#1E40AF]' : 'text-blue-100 drop-shadow-sm'}`}
           style={{ textAlignLast: 'justify' }}
         >
           Himalayan Natural Mineral Water
