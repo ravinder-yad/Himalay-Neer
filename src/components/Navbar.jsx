@@ -192,62 +192,71 @@ const Navbar = () => {
           </div>
         </motion.nav>
 
-        {/* Mobile Drawer */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMobileMenuOpen(false)} className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[110]" />
-              <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: "spring", damping: 25, stiffness: 200 }} className="fixed right-0 top-0 h-full w-[85%] sm:w-[400px] bg-white z-[111] shadow-2xl p-8 flex flex-col rounded-l-[2rem]">
-                <div className="flex justify-between items-center mb-12">
-                  <Logo variant="dark" className="h-10" />
-                  <button onClick={() => setIsMobileMenuOpen(false)} className="w-12 h-12 flex items-center justify-center bg-slate-50 hover:bg-slate-100 rounded-full border border-slate-200 transition-colors"><HiX size={24} className="text-slate-700" /></button>
+      </header>
+
+      {/* Mobile Drawer - Moved outside header to fix backdrop-filter fixed positioning bug */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMobileMenuOpen(false)} className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[1000]" />
+            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: "spring", damping: 25, stiffness: 200 }} className="fixed right-0 top-0 h-[100dvh] w-[85%] sm:w-[400px] bg-white z-[1001] shadow-2xl p-6 md:p-8 flex flex-col rounded-l-[2rem] overflow-y-auto">
+              <div className="flex justify-between items-center mb-8 shrink-0">
+                <div className="w-[140px]">
+                  <Logo variant="dark" />
                 </div>
-                <div className="flex flex-col space-y-2">
-                  {navLinks.map((link) => {
-                    const isActive = location.pathname === link.path;
-                    return (
-                      <Link key={link.name} to={link.path} onClick={() => setIsMobileMenuOpen(false)} className={`text-2xl font-black py-4 px-6 rounded-2xl transition-colors ${isActive ? 'bg-blue-50 text-blue-600' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-800'}`}>
-                        {link.name}
-                      </Link>
-                    )
-                  })}
-                  
-                  <div className="h-px bg-slate-100 my-4 w-full"></div>
-                  
-                  {user ? (
-                    <>
-                      <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100">
+                <button onClick={() => setIsMobileMenuOpen(false)} className="w-12 h-12 flex items-center justify-center bg-slate-50 hover:bg-slate-100 rounded-full border border-slate-200 transition-colors shrink-0"><HiX size={24} className="text-slate-700" /></button>
+              </div>
+              <div className="flex flex-col space-y-2 shrink-0">
+                {navLinks.map((link) => {
+                  const isActive = location.pathname === link.path;
+                  return (
+                    <Link key={link.name} to={link.path} onClick={() => setIsMobileMenuOpen(false)} className={`text-2xl font-black py-4 px-6 rounded-2xl transition-colors block ${isActive ? 'bg-blue-50 text-blue-600' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-800'}`}>
+                      {link.name}
+                    </Link>
+                  )
+                })}
+                
+                <div className="h-px bg-slate-100 my-4 w-full"></div>
+                
+                {user ? (
+                  <>
+                    <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100 block">
+                      <div className="flex items-center space-x-3">
                         <HiOutlineUser />
                         <span>{user.name.split(' ')[0]}'s Dashboard</span>
-                      </Link>
-                      <button onClick={() => { setIsMobileMenuOpen(false); onLogout(); }} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors text-slate-400 hover:bg-slate-50 hover:text-red-500 text-left w-full">
-                        <HiOutlineLogin />
-                        <span>Logout</span>
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors text-slate-400 hover:bg-slate-50 hover:text-slate-800">
+                      </div>
+                    </Link>
+                    <button onClick={() => { setIsMobileMenuOpen(false); onLogout(); }} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors text-slate-400 hover:bg-slate-50 hover:text-red-500 text-left w-full">
+                      <HiOutlineLogin />
+                      <span>Logout</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors text-slate-400 hover:bg-slate-50 hover:text-slate-800 block">
+                      <div className="flex items-center space-x-3">
                         <HiOutlineLogin />
                         <span>Login</span>
-                      </Link>
-                      <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100">
+                      </div>
+                    </Link>
+                    <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 text-2xl font-black py-4 px-6 rounded-2xl transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100 block">
+                      <div className="flex items-center space-x-3">
                         <HiOutlineUserAdd />
                         <span>Sign Up</span>
-                      </Link>
-                    </>
-                  )}
-                </div>
-                <div className="mt-auto pt-8 border-t border-slate-100">
-                  <Link to="/checkout" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button variant="contained" fullWidth className="!rounded-2xl !bg-gradient-to-r !from-blue-600 !to-cyan-500 !py-4 !text-white !font-black !text-lg !normal-case shadow-xl shadow-blue-500/20">Buy Now</Button>
-                  </Link>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
-      </header>
+                      </div>
+                    </Link>
+                  </>
+                )}
+              </div>
+              <div className="mt-auto pt-8 border-t border-slate-100 shrink-0">
+                <Link to="/checkout" onClick={() => setIsMobileMenuOpen(false)} className="block">
+                  <Button variant="contained" fullWidth className="!rounded-2xl !bg-gradient-to-r !from-blue-600 !to-cyan-500 !py-4 !text-white !font-black !text-lg !normal-case shadow-xl shadow-blue-500/20">Buy Now</Button>
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };
