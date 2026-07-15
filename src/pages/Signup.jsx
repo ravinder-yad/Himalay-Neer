@@ -55,7 +55,7 @@ const Signup = () => {
              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                <FiDroplet className="text-[#2563eb] w-12 h-12" />
              </div>
-             <h1 className="text-4xl lg:text-5xl font-black tracking-tight mb-2">Himalay Neer</h1>
+             <h1 className="text-4xl lg:text-5xl font-black tracking-tight mb-2">Himalayneer</h1>
           </div>
 
           <div className="text-center w-full mt-auto">

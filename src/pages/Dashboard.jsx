@@ -119,7 +119,7 @@ const Dashboard = () => {
              <div className="w-10 h-10 bg-gradient-to-tr from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-500/30">
                H
              </div>
-             <span className="text-2xl font-black text-slate-800 tracking-tight">Himalay Neer</span>
+             <span className="text-2xl font-black text-slate-800 tracking-tight">Himalayneer</span>
           </Link>
         </div>
         

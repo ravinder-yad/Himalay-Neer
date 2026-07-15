@@ -45,7 +45,7 @@ const Footer = () => {
           className="bg-white/10 backdrop-blur-xl rounded-[3rem] p-12 md:p-16 mb-24 border border-white/10 flex flex-col md:flex-row items-center justify-between shadow-2xl"
         >
           <div className="text-center md:text-left mb-10 md:mb-0">
-            <h2 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter">Stay Fresh with Himalay Neer 💧</h2>
+            <h2 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter">Stay Fresh with Himalayneer 💧</h2>
             <p className="text-blue-200 font-bold uppercase tracking-[0.4em] text-xs opacity-70">Pure Purity at Your Doorstep</p>
           </div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -117,7 +117,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-4 text-blue-100/60 text-sm">
                 <HiOutlineMail className="text-blue-400 shrink-0" size={24} />
-                <span>purity@himalayneer.com</span>
+                <span>Himalayneer.com@gmail.com</span>
               </li>
               <li className="flex items-center gap-4 text-blue-100/60 text-sm pt-4 border-t border-white/5">
                 <HiOutlineClock className="text-blue-400 shrink-0" size={24} />
@@ -182,7 +182,7 @@ const Footer = () => {
 
         {/* ⚖️ 5. Bottom Bar (Final Strip) */}
         <div className="py-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between text-white/30 text-xs font-black uppercase tracking-[0.2em]">
-          <p className="mb-6 md:mb-0">© 2026 Himalay Neer. All Rights Reserved.</p>
+          <p className="mb-6 md:mb-0">© 2026 Himalayneer. All Rights Reserved.</p>
           <div className="flex gap-10">
             <a href="#" className="hover:text-blue-300 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-blue-300 transition-colors">Terms & Conditions</a>

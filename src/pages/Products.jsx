@@ -230,7 +230,7 @@ const Products = () => {
       {/* 8. Call To Action */}
       <section className="py-32 bg-white text-center">
          <div className="container mx-auto px-6">
-            <h2 className="text-4xl md:text-6xl font-black text-blue-900 mb-12 tracking-tighter">Order Fresh Himalay Neer Today</h2>
+            <h2 className="text-4xl md:text-6xl font-black text-blue-900 mb-12 tracking-tighter">Order Fresh Himalayneer Today</h2>
             <div className="flex flex-wrap justify-center gap-6">
                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button variant="contained" className="!rounded-full !bg-blue-600 !px-12 !py-5 !font-black !text-lg !normal-case !shadow-2xl shadow-blue-600/30">Buy Now</Button>

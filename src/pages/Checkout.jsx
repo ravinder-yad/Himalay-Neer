@@ -86,7 +86,7 @@ const Checkout = () => {
           Order Placed! 💧
         </motion.h2>
         <p className="text-slate-500 text-xl mb-4">Order ID: #HN-{Math.floor(Math.random() * 1000000)}</p>
-        <p className="text-slate-400 text-lg mb-12 max-w-md mx-auto">Thank you for choosing Himalay Neer. Your water will reach you in record time.</p>
+        <p className="text-slate-400 text-lg mb-12 max-w-md mx-auto">Thank you for choosing Himalayneer. Your water will reach you in record time.</p>
         <Link to="/">
           <Button variant="contained" className="!rounded-full !bg-blue-600 !px-16 !py-6 !font-black !text-xl !normal-case !shadow-2xl">
             Continue Shopping

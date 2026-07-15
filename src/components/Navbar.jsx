@@ -96,7 +96,7 @@ const Navbar = () => {
                 className="relative flex items-center justify-center"
               >
                 <Logo 
-                  variant={isSolid ? "dark" : "light"} 
+                  variant="dark" 
                   className={`transition-all duration-500 ${isScrolled ? 'h-10 md:h-12' : 'h-12 md:h-14'}`} 
                 />
               </motion.div>

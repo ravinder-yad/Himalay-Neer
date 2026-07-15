@@ -11,7 +11,7 @@ const Contact = () => {
   const contactInfos = [
     { title: 'Our Address', val: 'Himalayan Spring Valley, Solan, HP - 173212', icon: <HiOutlineLocationMarker size={28}/> },
     { title: 'Phone Number', val: '+91 98765 43210', icon: <HiOutlinePhone size={28}/> },
-    { title: 'Email Address', val: 'purity@himalayneer.com', icon: <HiOutlineMail size={28}/> },
+    { title: 'Email Address', val: 'Himalayneer.com@gmail.com', icon: <HiOutlineMail size={28}/> },
     { title: 'Working Hours', val: 'Mon - Sun: 8 AM to 9 PM', icon: <HiOutlineClock size={28}/> },
   ];
 

@@ -134,7 +134,7 @@ const Features = () => {
     <section className="py-32 bg-blue-50">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-20">
-          <h2 className="text-4xl md:text-5xl font-black text-blue-900 mb-6">Why Choose Himalay Neer?</h2>
+          <h2 className="text-4xl md:text-5xl font-black text-blue-900 mb-6">Why Choose Himalayneer?</h2>
           <p className="text-slate-500 font-medium">We don't just sell water; we provide a source of life and wellness direct from the mountains.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -186,7 +186,7 @@ const Products = () => {
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
           <div className="max-w-xl">
             <h2 className="text-4xl md:text-6xl font-black text-blue-900 mb-6 tracking-tighter">Our Products</h2>
-            <p className="text-slate-500 font-medium text-lg">Every drop of Himalay Neer comes in a size that fits your lifestyle perfectly.</p>
+            <p className="text-slate-500 font-medium text-lg">Every drop of Himalayneer comes in a size that fits your lifestyle perfectly.</p>
           </div>
           <Button variant="outlined" className="!rounded-full !border-2 !border-blue-900 !text-blue-900 !font-black !px-10 !py-4 !normal-case">View All Products</Button>
         </div>
@@ -258,7 +258,7 @@ const AboutShort = () => {
           <span className="text-blue-500 font-black uppercase tracking-[0.3em] text-xs mb-6 block">Our Story</span>
           <h2 className="text-4xl md:text-6xl font-black text-blue-900 mb-8 leading-tight">Crafted by nature, <br /> delivered by us.</h2>
           <p className="text-slate-500 text-lg leading-relaxed mb-10">
-            Himalay Neer was born from a simple mission: to bring the pristine, untouched mineral-rich water of the Himalayan springs to your city. We believe that everyone deserves access to water as nature intended — pure, balanced, and refreshing.
+            Himalayneer was born from a simple mission: to bring the pristine, untouched mineral-rich water of the Himalayan springs to your city. We believe that everyone deserves access to water as nature intended — pure, balanced, and refreshing.
           </p>
           <Link to="/about">
             <Button variant="contained" className="!rounded-full !bg-blue-900 !px-10 !py-4 !font-black !normal-case">Read Our Full Story</Button>
@@ -455,7 +455,7 @@ const Home = () => {
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10 max-w-2xl">
               <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">Order Fresh Himalayan <br /> Water Today</h2>
-              <p className="text-blue-100 text-xl mb-12 font-medium opacity-80">Join 50,000+ happy customers who trust Himalay Neer for their daily hydration needs.</p>
+              <p className="text-blue-100 text-xl mb-12 font-medium opacity-80">Join 50,000+ happy customers who trust Himalayneer for their daily hydration needs.</p>
               <div className="flex flex-wrap gap-6">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button variant="contained" className="!rounded-full !bg-white !text-blue-900 !px-12 !py-5 !font-black !text-lg !normal-case !shadow-2xl">Start Your Order</Button>

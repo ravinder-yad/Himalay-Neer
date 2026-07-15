@@ -44,7 +44,7 @@ const About = () => {
             transition={{ delay: 0.1 }}
             className="text-5xl md:text-8xl font-black text-white tracking-tighter mb-6"
           >
-            About <span className="text-blue-400 italic">Himalay Neer</span>
+            About <span className="text-blue-400 italic">Himalayneer</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -85,7 +85,7 @@ const About = () => {
           <div>
             <h2 className="text-4xl md:text-6xl font-black text-blue-900 mb-8 tracking-tighter leading-tight">Bringing Purity <br /> To Your Doorstep</h2>
             <p className="text-slate-500 text-lg leading-relaxed mb-8">
-              Himalay Neer is not just a water brand; it is a commitment to health and purity. We believe that water is the most essential element of life, and it should be consumed in its most natural and pristine form.
+              Himalayneer is not just a water brand; it is a commitment to health and purity. We believe that water is the most essential element of life, and it should be consumed in its most natural and pristine form.
             </p>
             <p className="text-slate-500 text-lg leading-relaxed mb-10">
               Our journey started with a simple idea: to bridge the gap between the untouched springs of the Himalayas and the modern urban lifestyle. Every bottle we produce is a testament to our dedication to quality.
@@ -143,7 +143,7 @@ const About = () => {
                 {
                   year: '2024',
                   title: 'Rising Nationally',
-                  desc: 'From a local favorite to a national brand, Himalay Neer is now hydrating thousands of families and offices across 15+ cities.',
+                  desc: 'From a local favorite to a national brand, Himalayneer is now hydrating thousands of families and offices across 15+ cities.',
                   side: 'left'
                 }
               ].map((item, i) => (
